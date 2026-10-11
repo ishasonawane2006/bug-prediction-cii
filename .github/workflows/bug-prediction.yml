@@ -1,0 +1,41 @@
+name: Bug Prediction CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  bug-prediction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest -v
+
+      - name: Run Flake8
+        run: flake8 . --max-line-length=100 --exclude=.git,__pycache__,.venv
+
+      - name: Run bug predictor
+        if: always()
+        run: |
+          python bug_predictor.py
+          cat bug_report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload bug report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bug-report
+          path: bug_report.md
