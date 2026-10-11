@@ -1,3 +1,4 @@
+ HEAD
 # Bug Prediction using GitHub Actions (ASDD Experiment 11 Mini Project)
 
 A small CI/CD project that runs on every push or pull request and predicts bug risk
@@ -35,3 +36,6 @@ The report is written to `bug_report.md`.
 
 ## Run on GitHub
 See DEMO_STEPS.md.
+=======
+# bug-prediction-cii
+>>>>>>> de09c2c916b88300fef2766f8b84ea85a21eeeeb
